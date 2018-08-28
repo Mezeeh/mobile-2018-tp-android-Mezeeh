@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,13 +22,39 @@ public class Devoirs extends AppCompatActivity {
 
         vueListeDevoir = (ListView) findViewById(R.id.vue_liste_devoir);
         listeDevoir = preparerDevoirs();
+
+        SimpleAdapter adapteur = new SimpleAdapter(
+                this,
+                listeDevoir,
+                android.R.layout.two_line_list_item,
+                new String[] {"matiere","tache"},
+                new int[] {android.R.id.text1, android.R.id.text2});
+
+        vueListeDevoir.setAdapter(adapteur);
     }
 
     private List<HashMap<String, String>> preparerDevoirs() {
         List<HashMap<String, String>> listeDevoir = new ArrayList<HashMap<String, String>>();
 
+//        Log.d("Test", "preparerDevoirs()");
 
-        Log.d("Test", "preparerDevoirs()");
+        HashMap<String, String> devoir = new HashMap<String, String>();
+
+        devoir.put("matiere", "Programmation Mobile");
+        devoir.put("tache", "Echafaud du travail pratique Android Java");
+        listeDevoir.add(devoir);
+
+//        devoir.clear();
+        devoir = new HashMap<String, String>();
+        devoir.put("matiere", "Espagnol");
+        devoir.put("tache", "Faire page 14 et 18 dans le cahier");
+        listeDevoir.add(devoir);
+
+//        devoir.clear();
+        devoir = new HashMap<String, String>();
+        devoir.put("matiere", "Ethique");
+        devoir.put("tache", "Lire page 4 a 19 des notes de cours");
+        listeDevoir.add(devoir);
 
         return listeDevoir;
     }
