@@ -12,6 +12,8 @@ public class DevoirsDAO {
     public DevoirsDAO() {
         instance = null;
         listeDevoir = new ArrayList<HashMap<String, String>>();
+
+        preparerDevoirs();
     }
 
     public List<HashMap<String, String>> recupererListeDevoir() {
@@ -25,7 +27,7 @@ public class DevoirsDAO {
         return instance;
     }
 
-    public List<HashMap<String, String>> preparerDevoirs() {
+    private List<HashMap<String, String>> preparerDevoirs() {
 //        Log.d("Test", "preparerDevoirs()");
 
         HashMap<String, String> devoir = new HashMap<String, String>();

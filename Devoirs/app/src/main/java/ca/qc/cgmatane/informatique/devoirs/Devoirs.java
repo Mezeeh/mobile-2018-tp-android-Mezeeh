@@ -35,7 +35,7 @@ public class Devoirs extends AppCompatActivity {
         devoirsDAO = DevoirsDAO.getInstance();
 
         vueListeDevoir = (ListView) findViewById(R.id.vue_liste_devoir);
-        listeDevoir = devoirsDAO.preparerDevoirs();
+        listeDevoir = devoirsDAO.recupererListeDevoir();
 
         SimpleAdapter adapteur = new SimpleAdapter(
                 this,
