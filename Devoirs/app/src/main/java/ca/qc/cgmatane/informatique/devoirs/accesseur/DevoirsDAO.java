@@ -5,14 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DevoirsDAO {
+    private  static DevoirsDAO instance;
+
     protected List<HashMap<String, String>> listeDevoir;
 
-    public DevoirsDAO(List<HashMap<String, String>> listeDevoir) {
+    public DevoirsDAO() {
+        instance = null;
         listeDevoir = new ArrayList<HashMap<String, String>>();
     }
 
-    public List<HashMap<String, String>> getListeDevoir() {
+    public List<HashMap<String, String>> recupererListeDevoir() {
         return listeDevoir;
+    }
+
+    public static DevoirsDAO getInstance(){
+        if(null == instance)
+            instance = new DevoirsDAO();
+
+        return instance;
     }
 
     public List<HashMap<String, String>> preparerDevoirs() {

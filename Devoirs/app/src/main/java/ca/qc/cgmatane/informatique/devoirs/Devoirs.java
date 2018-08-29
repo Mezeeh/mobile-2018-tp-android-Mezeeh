@@ -32,7 +32,7 @@ public class Devoirs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_devoirs);
 
-        devoirsDAO = new DevoirsDAO();
+        devoirsDAO = DevoirsDAO.getInstance();
 
         vueListeDevoir = (ListView) findViewById(R.id.vue_liste_devoir);
         listeDevoir = devoirsDAO.preparerDevoirs();
