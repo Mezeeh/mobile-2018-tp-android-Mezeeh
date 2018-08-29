@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import android.widget.*;
+import ca.qc.cgmatane.informatique.devoirs.vue.AjouterDevoir;
 import ca.qc.cgmatane.informatique.devoirs.vue.ModifierDevoir;
 
 import java.lang.reflect.Modifier;
@@ -22,6 +20,9 @@ public class Devoirs extends AppCompatActivity {
     protected List<HashMap<String, String>> listeDevoir;
 
     protected Intent intentionNaviguerModifierDevoir;
+    protected Intent intentionNaviguerAjouterDevoir;
+
+    protected Button actionNaviguerAjouterDevoir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,16 @@ public class Devoirs extends AppCompatActivity {
                 startActivity(intentionNaviguerModifierDevoir);
             }
         });
+
+            intentionNaviguerAjouterDevoir = new Intent(Devoirs.this, AjouterDevoir.class);
+
+            actionNaviguerAjouterDevoir = (Button)findViewById(R.id.action_naviguer_ajouter_devoir);
+            actionNaviguerAjouterDevoir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(intentionNaviguerAjouterDevoir);
+                }
+            });
     }
 
     private List<HashMap<String, String>> preparerDevoirs() {
