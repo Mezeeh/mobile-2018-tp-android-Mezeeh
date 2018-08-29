@@ -5,10 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DevoirsDAO {
+    protected List<HashMap<String, String>> listeDevoir;
+
+    public DevoirsDAO(List<HashMap<String, String>> listeDevoir) {
+        listeDevoir = new ArrayList<HashMap<String, String>>();
+    }
+
+    public List<HashMap<String, String>> getListeDevoir() {
+        return listeDevoir;
+    }
 
     public List<HashMap<String, String>> preparerDevoirs() {
-        List<HashMap<String, String>> listeDevoir = new ArrayList<HashMap<String, String>>();
-
 //        Log.d("Test", "preparerDevoirs()");
 
         HashMap<String, String> devoir = new HashMap<String, String>();
