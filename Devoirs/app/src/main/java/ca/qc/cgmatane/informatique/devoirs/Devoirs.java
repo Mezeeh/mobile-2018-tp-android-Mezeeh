@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.devoirs;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,7 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
+import ca.qc.cgmatane.informatique.devoirs.vue.ModifierDevoir;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +20,8 @@ public class Devoirs extends AppCompatActivity {
 
     protected ListView vueListeDevoir;
     protected List<HashMap<String, String>> listeDevoir;
+
+    protected Intent intentionNaviguerModifierDevoir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,22 @@ public class Devoirs extends AppCompatActivity {
         vueListeDevoir.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View vue, int positionDansAdapteur, long positionItem) {
-//                ListView vueListeDevoir = (ListView) vue.getParent();
+                ListView vueListeDevoir = (ListView) vue.getParent();
+
                 Log.d("Journalisation", "positionItem : " + positionItem);
+
+                HashMap<String, String> devoir = (HashMap<String, String>) vueListeDevoir.getItemAtPosition((int) positionItem);
+
+                Toast message = Toast.makeText(getApplicationContext(),
+                        "Position : " + positionItem +
+                                " Matière : " + devoir.get("matiere") +
+                                " Tâche : " + devoir.get("tache"),
+                        Toast.LENGTH_SHORT);
+
+                message.show();
+
+                intentionNaviguerModifierDevoir = new Intent(Devoirs.this, ModifierDevoir.class);
+                startActivity(intentionNaviguerModifierDevoir);
             }
         });
     }
