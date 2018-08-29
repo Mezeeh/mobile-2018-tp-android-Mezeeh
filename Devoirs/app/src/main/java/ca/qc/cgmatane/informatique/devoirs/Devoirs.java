@@ -3,6 +3,8 @@ package ca.qc.cgmatane.informatique.devoirs;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -31,6 +33,14 @@ public class Devoirs extends AppCompatActivity {
                 new int[] {android.R.id.text1, android.R.id.text2});
 
         vueListeDevoir.setAdapter(adapteur);
+
+        vueListeDevoir.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View vue, int positionDansAdapteur, long positionItem) {
+//                ListView vueListeDevoir = (ListView) vue.getParent();
+                Log.d("Journalisation", "positionItem : " + positionItem);
+            }
+        });
     }
 
     private List<HashMap<String, String>> preparerDevoirs() {
@@ -44,13 +54,11 @@ public class Devoirs extends AppCompatActivity {
         devoir.put("tache", "Echafaud du travail pratique Android Java");
         listeDevoir.add(devoir);
 
-//        devoir.clear();
         devoir = new HashMap<String, String>();
         devoir.put("matiere", "Espagnol");
         devoir.put("tache", "Faire page 14 et 18 dans le cahier");
         listeDevoir.add(devoir);
 
-//        devoir.clear();
         devoir = new HashMap<String, String>();
         devoir.put("matiere", "Ethique");
         devoir.put("tache", "Lire page 4 a 19 des notes de cours");
