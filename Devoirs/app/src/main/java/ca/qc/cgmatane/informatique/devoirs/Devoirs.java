@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Devoirs extends AppCompatActivity {
+    protected static final int ACTIVITE_MODIFIER_DEVOIR = 1;
 
     protected ListView vueListeDevoir;
     protected List<HashMap<String, String>> listeDevoir;
@@ -35,36 +36,29 @@ public class Devoirs extends AppCompatActivity {
         devoirsDAO = DevoirsDAO.getInstance();
 
         vueListeDevoir = (ListView) findViewById(R.id.vue_liste_devoir);
-        listeDevoir = devoirsDAO.recupererListeDevoirPourAdapteur();
 
-        SimpleAdapter adapteur = new SimpleAdapter(
-                this,
-                listeDevoir,
-                android.R.layout.two_line_list_item,
-                new String[] {"matiere","tache"},
-                new int[] {android.R.id.text1, android.R.id.text2});
-
-        vueListeDevoir.setAdapter(adapteur);
+        afficherTousLesDevoirs();
 
         vueListeDevoir.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View vue, int positionDansAdapteur, long positionItem) {
                 ListView vueListeDevoir = (ListView) vue.getParent();
 
-                Log.d("Journalisation", "positionItem : " + positionItem);
+//                Log.d("Journalisation", "positionItem : " + positionItem);
 
                 HashMap<String, String> devoir = (HashMap<String, String>) vueListeDevoir.getItemAtPosition((int) positionItem);
 
-                Toast message = Toast.makeText(getApplicationContext(),
+                /*Toast message = Toast.makeText(getApplicationContext(),
                         "Position : " + positionItem +
                                 " Matière : " + devoir.get("matiere") +
                                 " Tâche : " + devoir.get("tache"),
                         Toast.LENGTH_SHORT);
 
-                message.show();
+                message.show();*/
 
                 intentionNaviguerModifierDevoir = new Intent(Devoirs.this, ModifierDevoir.class);
-                startActivity(intentionNaviguerModifierDevoir);
+                intentionNaviguerModifierDevoir.putExtra("id_devoir", devoir.get("id_devoir"));
+                startActivityForResult(intentionNaviguerModifierDevoir, ACTIVITE_MODIFIER_DEVOIR);
             }
         });
 
@@ -79,27 +73,24 @@ public class Devoirs extends AppCompatActivity {
             });
     }
 
-/*    private List<HashMap<String, String>> preparerDevoirs() {
-        List<HashMap<String, String>> listeDevoir = new ArrayList<HashMap<String, String>>();
+    protected void afficherTousLesDevoirs(){
+        listeDevoir = devoirsDAO.recupererListeDevoirPourAdapteur();
 
-//        Log.d("Test", "preparerDevoirs()");
+        SimpleAdapter adapteur = new SimpleAdapter(
+                this,
+                listeDevoir,
+                android.R.layout.two_line_list_item,
+                new String[] {"matiere","tache"},
+                new int[] {android.R.id.text1, android.R.id.text2});
 
-        HashMap<String, String> devoir = new HashMap<String, String>();
+        vueListeDevoir.setAdapter(adapteur);
+    }
 
-        devoir.put("matiere", "Programmation Mobile");
-        devoir.put("tache", "Echafaud du travail pratique Android Java");
-        listeDevoir.add(devoir);
-
-        devoir = new HashMap<String, String>();
-        devoir.put("matiere", "Espagnol");
-        devoir.put("tache", "Faire page 14 et 18 dans le cahier");
-        listeDevoir.add(devoir);
-
-        devoir = new HashMap<String, String>();
-        devoir.put("matiere", "Ethique");
-        devoir.put("tache", "Lire page 4 a 19 des notes de cours");
-        listeDevoir.add(devoir);
-
-        return listeDevoir;
-    }*/
+    protected void onActivityResult(int activite, int resultat, Intent donnees){
+        switch (activite){
+            case ACTIVITE_MODIFIER_DEVOIR:
+                afficherTousLesDevoirs();
+                break;
+        }
+    }
 }
