@@ -60,4 +60,22 @@ public class DevoirsDAO {
 
         return listeDevoir;*/
     }
+
+    public Devoir trouverDevoir(int id_devoir){
+        for(Devoir devoir : this.listeDevoir)
+            if(devoir.getId_devoir() == id_devoir)
+                return devoir;
+
+        return null;
+    }
+
+    public void modifierDevoir(Devoir devoirAModifier){
+        for(Devoir devoir : this.listeDevoir){
+            if(devoir.getId_devoir() == devoirAModifier.getId_devoir()){
+                devoir.setMatiere(devoirAModifier.getMatiere());
+                devoir.setTache(devoirAModifier.getTache());
+                break;
+            }
+        }
+    }
 }
