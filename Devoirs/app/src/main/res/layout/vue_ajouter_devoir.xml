@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/vue_ajouter_livre_tache"/>
+            android:id="@+id/vue_ajouter_devoir_tache"/>
     <Button
-            android:text="Button"
+            android:text="Ajouter le devoir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/appliquer_action_confirmer_ajouter"/>
 </LinearLayout>

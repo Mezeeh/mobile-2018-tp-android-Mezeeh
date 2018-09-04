@@ -78,4 +78,8 @@ public class DevoirsDAO {
             }
         }
     }
+
+    public void ajouterDevoir(Devoir devoir){
+        listeDevoir.add(devoir);
+    }
 }
