@@ -17,6 +17,7 @@ import java.util.List;
 
 public class Devoirs extends AppCompatActivity {
     protected static final int ACTIVITE_MODIFIER_DEVOIR = 1;
+    protected static final int ACTIVITE_AJOUTER_DEVOIR = 2;
 
     protected ListView vueListeDevoir;
     protected List<HashMap<String, String>> listeDevoir;
@@ -68,7 +69,7 @@ public class Devoirs extends AppCompatActivity {
             actionNaviguerAjouterDevoir.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(intentionNaviguerAjouterDevoir);
+                    startActivityForResult(intentionNaviguerAjouterDevoir, ACTIVITE_AJOUTER_DEVOIR);
                 }
             });
     }
@@ -89,6 +90,7 @@ public class Devoirs extends AppCompatActivity {
     protected void onActivityResult(int activite, int resultat, Intent donnees){
         switch (activite){
             case ACTIVITE_MODIFIER_DEVOIR:
+            case ACTIVITE_AJOUTER_DEVOIR:
                 afficherTousLesDevoirs();
                 break;
         }
