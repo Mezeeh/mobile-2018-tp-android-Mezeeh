@@ -35,7 +35,7 @@ public class Devoirs extends AppCompatActivity {
         devoirsDAO = DevoirsDAO.getInstance();
 
         vueListeDevoir = (ListView) findViewById(R.id.vue_liste_devoir);
-        listeDevoir = devoirsDAO.recupererListeDevoir();
+        listeDevoir = devoirsDAO.recupererListeDevoirPourAdapteur();
 
         SimpleAdapter adapteur = new SimpleAdapter(
                 this,
@@ -79,27 +79,27 @@ public class Devoirs extends AppCompatActivity {
             });
     }
 
-//    private List<HashMap<String, String>> preparerDevoirs() {
-//        List<HashMap<String, String>> listeDevoir = new ArrayList<HashMap<String, String>>();
-//
-////        Log.d("Test", "preparerDevoirs()");
-//
-//        HashMap<String, String> devoir = new HashMap<String, String>();
-//
-//        devoir.put("matiere", "Programmation Mobile");
-//        devoir.put("tache", "Echafaud du travail pratique Android Java");
-//        listeDevoir.add(devoir);
-//
-//        devoir = new HashMap<String, String>();
-//        devoir.put("matiere", "Espagnol");
-//        devoir.put("tache", "Faire page 14 et 18 dans le cahier");
-//        listeDevoir.add(devoir);
-//
-//        devoir = new HashMap<String, String>();
-//        devoir.put("matiere", "Ethique");
-//        devoir.put("tache", "Lire page 4 a 19 des notes de cours");
-//        listeDevoir.add(devoir);
-//
-//        return listeDevoir;
-//    }
+/*    private List<HashMap<String, String>> preparerDevoirs() {
+        List<HashMap<String, String>> listeDevoir = new ArrayList<HashMap<String, String>>();
+
+//        Log.d("Test", "preparerDevoirs()");
+
+        HashMap<String, String> devoir = new HashMap<String, String>();
+
+        devoir.put("matiere", "Programmation Mobile");
+        devoir.put("tache", "Echafaud du travail pratique Android Java");
+        listeDevoir.add(devoir);
+
+        devoir = new HashMap<String, String>();
+        devoir.put("matiere", "Espagnol");
+        devoir.put("tache", "Faire page 14 et 18 dans le cahier");
+        listeDevoir.add(devoir);
+
+        devoir = new HashMap<String, String>();
+        devoir.put("matiere", "Ethique");
+        devoir.put("tache", "Lire page 4 a 19 des notes de cours");
+        listeDevoir.add(devoir);
+
+        return listeDevoir;
+    }*/
 }
