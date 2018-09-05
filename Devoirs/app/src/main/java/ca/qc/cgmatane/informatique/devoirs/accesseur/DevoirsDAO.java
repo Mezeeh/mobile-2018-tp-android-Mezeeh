@@ -91,6 +91,7 @@ public class DevoirsDAO {
     }
 
     public void ajouterDevoir(Devoir devoir){
-        listeDevoir.add(devoir);
+        String AJOUTER_DEVOIR = "insert into devoir(matiere, tache) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "')";
+        baseDeDonnees.getWritableDatabase().execSQL(AJOUTER_DEVOIR);
     }
 }
