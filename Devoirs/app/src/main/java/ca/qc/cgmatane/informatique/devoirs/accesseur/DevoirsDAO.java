@@ -1,6 +1,7 @@
 package ca.qc.cgmatane.informatique.devoirs.accesseur;
 
 import android.database.Cursor;
+import android.util.Log;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
 import java.util.ArrayList;
@@ -83,8 +84,8 @@ public class DevoirsDAO {
     public void modifierDevoir(Devoir devoirAModifier){
         for(Devoir devoir : this.listeDevoir){
             if(devoir.getId_devoir() == devoirAModifier.getId_devoir()){
-                devoir.setMatiere(devoirAModifier.getMatiere());
-                devoir.setTache(devoirAModifier.getTache());
+                String MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
+                baseDeDonnees.getWritableDatabase().execSQL(MODIFIER_DEVOIR);
                 break;
             }
         }
