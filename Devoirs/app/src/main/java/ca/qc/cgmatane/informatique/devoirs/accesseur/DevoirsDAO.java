@@ -41,24 +41,6 @@ public class DevoirsDAO {
         listeDevoir.add(new Devoir("Programmation Mobile", "Release initial du travail pratique Android Java", 1));
         listeDevoir.add(new Devoir("Espagnol", "Faire page 14 et 18 dans le cahier", 2));
         listeDevoir.add(new Devoir("Ethique", "Lire page 4 a 19 des notes de cours", 3));
-
-        /*HashMap<String, String> devoir = new HashMap<String, String>();
-
-        devoir.put("matiere", "Programmation Mobile");
-        devoir.put("tache", "Echafaud du travail pratique Android Java");
-        listeDevoir.add(devoir);
-
-        devoir = new HashMap<String, String>();
-        devoir.put("matiere", "Espagnol");
-        devoir.put("tache", "Faire page 14 et 18 dans le cahier");
-        listeDevoir.add(devoir);
-
-        devoir = new HashMap<String, String>();
-        devoir.put("matiere", "Ethique");
-        devoir.put("tache", "Lire page 4 a 19 des notes de cours");
-        listeDevoir.add(devoir);
-
-        return listeDevoir;*/
     }
 
     public Devoir trouverDevoir(int id_devoir){
