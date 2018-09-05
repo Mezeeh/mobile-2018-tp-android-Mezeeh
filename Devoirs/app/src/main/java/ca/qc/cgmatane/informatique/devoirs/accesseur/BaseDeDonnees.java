@@ -6,6 +6,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BaseDeDonnees extends SQLiteOpenHelper {
 
+    private static BaseDeDonnees instance = null;
+
+    public static BaseDeDonnees getInstance(Context contexte) {
+        if(null == instance)
+            instance = new BaseDeDonnees(contexte);
+        return instance;
+    }
+
+    public static BaseDeDonnees getInstance() {
+        return instance;
+    }
+
     public BaseDeDonnees(Context context) {
         super(context, "devoirs", null, 1);
     }
