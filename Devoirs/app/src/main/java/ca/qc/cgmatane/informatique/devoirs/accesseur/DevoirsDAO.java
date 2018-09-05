@@ -1,7 +1,6 @@
 package ca.qc.cgmatane.informatique.devoirs.accesseur;
 
 import android.database.Cursor;
-import android.util.Log;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
 import java.util.ArrayList;
@@ -20,8 +19,6 @@ public class DevoirsDAO {
         instance = null;
         baseDeDonnees = BaseDeDonnees.getInstance();
         listeDevoir = new ArrayList<Devoir>();
-
-//        preparerDevoirs();
     }
 
     public static DevoirsDAO getInstance(){
@@ -63,14 +60,6 @@ public class DevoirsDAO {
             listeDevoirPourAdapteur.add(devoir.obtenirDevoirPourAdapteur());
 
         return listeDevoirPourAdapteur;
-    }
-
-    private void preparerDevoirs() {
-//        Log.d("Test", "preparerDevoirs()");
-
-        listeDevoir.add(new Devoir("Programmation Mobile", "Release initial du travail pratique Android Java", 1));
-        listeDevoir.add(new Devoir("Espagnol", "Faire page 14 et 18 dans le cahier", 2));
-        listeDevoir.add(new Devoir("Ethique", "Lire page 4 a 19 des notes de cours", 3));
     }
 
     public Devoir trouverDevoir(int id_devoir){
