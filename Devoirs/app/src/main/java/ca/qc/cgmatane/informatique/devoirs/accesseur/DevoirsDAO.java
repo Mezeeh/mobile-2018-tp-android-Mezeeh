@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.devoirs.accesseur;
 
+import android.database.Cursor;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
 import java.util.ArrayList;
@@ -9,14 +10,17 @@ import java.util.List;
 public class DevoirsDAO {
     private  static DevoirsDAO instance;
 
+    private BaseDeDonnees baseDeDonnees;
+
     protected List<Devoir> listeDevoir;
     protected List<HashMap<String, String>> listeDevoirPourAdapteur;
 
     public DevoirsDAO() {
         instance = null;
+        baseDeDonnees = null;
         listeDevoir = new ArrayList<Devoir>();
 
-        preparerDevoirs();
+//        preparerDevoirs();
     }
 
     public static DevoirsDAO getInstance(){
@@ -26,8 +30,33 @@ public class DevoirsDAO {
         return instance;
     }
 
+    public void listerDevoir(){
+        String LISTER_DEVOIRS = "SELECT * FROM devoir";
+
+        Cursor curseur = baseDeDonnees.getReadableDatabase().rawQuery(LISTER_DEVOIRS, null);
+
+        this.listeDevoir.clear();
+
+        Devoir devoir;
+
+        int indexId_devoir = curseur.getColumnIndex("id_devoir");
+        int indexMatiere = curseur.getColumnIndex("matiere");
+        int indexTache = curseur.getColumnIndex("tache");
+
+        for(curseur.moveToFirst() ; !curseur.isAfterLast() ; curseur.moveToNext()){
+            int id_devoir = curseur.getInt(indexId_devoir);
+            String matiere = curseur.getString(indexMatiere);
+            String tache = curseur.getString(indexTache);
+
+            devoir = new Devoir(matiere, tache, id_devoir);
+            this.listeDevoir.add(devoir);
+        }
+    }
+
     public List<HashMap<String, String>> recupererListeDevoirPourAdapteur(){
         listeDevoirPourAdapteur = new ArrayList<HashMap<String, String>>();
+
+        listerDevoir();
 
         for(Devoir devoir : listeDevoir)
             listeDevoirPourAdapteur.add(devoir.obtenirDevoirPourAdapteur());
