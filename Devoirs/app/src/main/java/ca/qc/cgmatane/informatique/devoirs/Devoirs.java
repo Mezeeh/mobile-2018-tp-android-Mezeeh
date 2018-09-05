@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import ca.qc.cgmatane.informatique.devoirs.accesseur.BaseDeDonnees;
 import ca.qc.cgmatane.informatique.devoirs.accesseur.DevoirsDAO;
 import ca.qc.cgmatane.informatique.devoirs.vue.AjouterDevoir;
 import ca.qc.cgmatane.informatique.devoirs.vue.ModifierDevoir;
@@ -33,6 +34,8 @@ public class Devoirs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_devoirs);
+
+        BaseDeDonnees.getInstance(getApplicationContext());
 
         devoirsDAO = DevoirsDAO.getInstance();
 

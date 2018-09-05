@@ -17,7 +17,7 @@ public class DevoirsDAO {
 
     public DevoirsDAO() {
         instance = null;
-        baseDeDonnees = null;
+        baseDeDonnees = BaseDeDonnees.getInstance();
         listeDevoir = new ArrayList<Devoir>();
 
 //        preparerDevoirs();

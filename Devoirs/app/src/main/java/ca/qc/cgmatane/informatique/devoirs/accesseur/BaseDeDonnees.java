@@ -34,9 +34,9 @@ public class BaseDeDonnees extends SQLiteOpenHelper {
         String DELETE = "delete from devoir where 1 = 1";
         db.execSQL(DELETE);
 
-        String INSERT_1 = "insert into livre(id_devoir, matiere, tache) VALUES('1', 'Programmation Mobile', 'Release initial du travail pratique Android Java')";
-        String INSERT_2 = "insert into livre(id_devoir, matiere, tache) VALUES('2', 'Espagnol', 'Faire page 14 et 18 dans le cahier')";
-        String INSERT_3 = "insert into livre(id_devoir, matiere, tache) VALUES('3', 'Ethique', 'Lire page 4 a 19 des notes de cours')";
+        String INSERT_1 = "insert into devoir(id_devoir, matiere, tache) VALUES('1', 'Programmation Mobile', 'Release initial du travail pratique Android Java')";
+        String INSERT_2 = "insert into devoir(id_devoir, matiere, tache) VALUES('2', 'Espagnol', 'Faire page 14 et 18 dans le cahier')";
+        String INSERT_3 = "insert into devoir(id_devoir, matiere, tache) VALUES('3', 'Ethique', 'Lire page 4 a 19 des notes de cours')";
 
         db.execSQL(INSERT_1);
         db.execSQL(INSERT_2);
