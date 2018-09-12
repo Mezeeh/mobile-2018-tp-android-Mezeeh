@@ -10,6 +10,12 @@ public class Devoir {
 
     protected boolean aAlarme;
 
+    protected int anneeAlarme,
+                    moisAlarme,
+                    jourAlarme,
+                    heureAlarme,
+                    minuteAlarme;
+
     protected HashMap<String, String> devoirPourAdapteur;
 
     public Devoir(String matiere, String tache) {
@@ -67,5 +73,45 @@ public class Devoir {
 
     public void setaAlarme(boolean aAlarme) {
         this.aAlarme = aAlarme;
+    }
+
+    public int getAnneeAlarme() {
+        return anneeAlarme;
+    }
+
+    public void setAnneeAlarme(int anneeAlarme) {
+        this.anneeAlarme = anneeAlarme;
+    }
+
+    public int getMoisAlarme() {
+        return moisAlarme;
+    }
+
+    public void setMoisAlarme(int moisAlarme) {
+        this.moisAlarme = moisAlarme;
+    }
+
+    public int getJourAlarme() {
+        return jourAlarme;
+    }
+
+    public void setJourAlarme(int jourAlarme) {
+        this.jourAlarme = jourAlarme;
+    }
+
+    public int getHeureAlarme() {
+        return heureAlarme;
+    }
+
+    public void setHeureAlarme(int heureAlarme) {
+        this.heureAlarme = heureAlarme;
+    }
+
+    public int getMinuteAlarme() {
+        return minuteAlarme;
+    }
+
+    public void setMinuteAlarme(int minuteAlarme) {
+        this.minuteAlarme = minuteAlarme;
     }
 }

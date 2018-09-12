@@ -44,12 +44,16 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
                     heureAlarme,
                     minuteAlarme;
 
+    protected boolean aAlarme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_ajouter_devoir);
 
         this.accesseurDevoirs = DevoirsDAO.getInstance();
+
+        aAlarme = false;
 
         champMatiere = findViewById(R.id.vue_ajouter_devoir_matiere);
         champTache = findViewById(R.id.vue_ajouter_devoir_tache);
@@ -87,6 +91,15 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
 
     private void ajouterDevoir(){
         devoir = new Devoir(champMatiere.getText().toString(), champTache.getText().toString(), 0);
+
+        devoir.setaAlarme(aAlarme);
+        if(aAlarme){
+            devoir.setAnneeAlarme(anneeAlarme);
+            devoir.setMoisAlarme(moisAlarme);
+            devoir.setJourAlarme(jourAlarme);
+            devoir.setHeureAlarme(heureAlarme);
+            devoir.setMinuteAlarme(minuteAlarme);
+        }
 
         accesseurDevoirs.ajouterDevoir(devoir);
         naviguerRetourALaBibliotheque();
@@ -126,6 +139,8 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     }
 
     private void remplissageChampAlarme() {
+        aAlarme = true;
+        actionAjouterAlarme.setText("Modifier l'alarme");
         champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
     }
 }

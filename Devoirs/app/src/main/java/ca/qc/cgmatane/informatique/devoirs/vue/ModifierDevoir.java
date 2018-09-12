@@ -44,6 +44,8 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
                     heureAlarme,
                     minuteAlarme;
 
+    protected boolean aAlarme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,8 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
 
         devoir = accesseurDevoirs.trouverDevoir(id_livre);
 
+        this.aAlarme = devoir.isaAlarme();
+
         champMatiere = findViewById(R.id.vue_modifier_devoir_champ_matiere);
         champTache = findViewById(R.id.vue_modifier_devoir_champ_tache);
 
@@ -64,6 +68,16 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         champTache.setText(devoir.getTache());
 
         champAlarme = findViewById(R.id.vue_modifier_devoir_temps_alarme);
+        aAlarme = devoir.isaAlarme();
+        if(aAlarme) {
+            heureAlarme = devoir.getHeureAlarme();
+            minuteAlarme = devoir.getMinuteAlarme();
+            jourAlarme = devoir.getJourAlarme();
+            moisAlarme = devoir.getMoisAlarme();
+            anneeAlarme = devoir.getAnneeAlarme();
+            champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
+            Log.d("hello a", "" + heureAlarme);
+        }
 
         actionModifierDevoir = findViewById(R.id.action_modifier_devoir);
         actionModifierDevoir.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +88,11 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         });
 
         actionAjouterAlarme = findViewById(R.id.action_modifier_devoir_ajouter_alarme);
+        if(aAlarme)
+            actionAjouterAlarme.setText("Modifier l'alarme");
         actionAjouterAlarme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Hello", "HEY");
                 afficherDialogueChoixDate();
             }
         });
@@ -85,6 +100,14 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
 
     private void modifierDevoir(){
         devoir = new Devoir(champMatiere.getText().toString(), champTache.getText().toString(), this.devoir.getId_devoir());
+        devoir.setaAlarme(aAlarme);
+        if(aAlarme){
+            devoir.setAnneeAlarme(anneeAlarme);
+            devoir.setMoisAlarme(moisAlarme);
+            devoir.setJourAlarme(jourAlarme);
+            devoir.setHeureAlarme(heureAlarme);
+            devoir.setMinuteAlarme(minuteAlarme);
+        }
 
         accesseurDevoirs.modifierDevoir(devoir);
         naviguerRetourALaBibliotheque();
@@ -99,8 +122,6 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         this.anneeAlarme = annee;
         this.moisAlarme = mois;
         this.jourAlarme = jourDuMois;
-
-        Log.d("HELLO", "" + annee + " " + mois + " " + jour);
 
         afficherDialogueChoixHeure();
     }
@@ -135,6 +156,8 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     }
 
     private void remplissageChampAlarme() {
-        champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
+        aAlarme = true;
+        actionAjouterAlarme.setText("Modifier l'alarme");
+        champAlarme.setText("Alarme he: " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
     }
 }
