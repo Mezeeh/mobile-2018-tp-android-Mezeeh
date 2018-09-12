@@ -2,18 +2,15 @@ package ca.qc.cgmatane.informatique.devoirs.vue;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
-import ca.qc.cgmatane.informatique.devoirs.Devoirs;
 import ca.qc.cgmatane.informatique.devoirs.R;
 import ca.qc.cgmatane.informatique.devoirs.accesseur.DevoirsDAO;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -57,7 +54,7 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         champMatiere = findViewById(R.id.vue_ajouter_devoir_matiere);
         champTache = findViewById(R.id.vue_ajouter_devoir_tache);
 
-        champAlarme = findViewById(R.id.vue_temps_alarme);
+        champAlarme = findViewById(R.id.vue_ajouter_devoir_temps_alarme);
 
         actionAjouterDevoir = findViewById(R.id.appliquer_action_confirmer_ajouter);
         actionAjouterDevoir.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +64,7 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
             }
         });
 
-        actionAjouterAlarme = findViewById(R.id.action_ajouter_alarme);
+        actionAjouterAlarme = findViewById(R.id.action_ajouter_devoir_ajouter_alarme);
         actionAjouterAlarme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

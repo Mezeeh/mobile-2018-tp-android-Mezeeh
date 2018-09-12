@@ -34,11 +34,11 @@
             android:id="@+id/vue_ajouter_devoir_tache"/>
     <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/vue_temps_alarme"/>
+            android:layout_height="wrap_content" android:id="@+id/vue_ajouter_devoir_temps_alarme"/>
     <Button
             android:text="Ajouter une alarme"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/action_ajouter_alarme"/>
+            android:layout_height="wrap_content" android:id="@+id/action_ajouter_devoir_ajouter_alarme"/>
     <Button
             android:text="Ajouter le devoir"
             android:layout_width="match_parent"

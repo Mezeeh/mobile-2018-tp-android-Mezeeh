@@ -41,6 +41,13 @@
             android:ems="10"
             android:inputType="textPersonName" />
 
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/vue_modifier_devoir_temps_alarme"/>
+    <Button
+            android:text="Ajouter une alarme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/action_modifier_devoir_ajouter_alarme"/>
     <Button
             android:id="@+id/action_modifier_devoir"
             android:layout_width="match_parent"

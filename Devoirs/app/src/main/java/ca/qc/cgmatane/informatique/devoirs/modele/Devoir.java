@@ -8,17 +8,23 @@ public class Devoir {
 
     protected int id_devoir;
 
+    protected boolean aAlarme;
+
     protected HashMap<String, String> devoirPourAdapteur;
 
     public Devoir(String matiere, String tache) {
         this.matiere = matiere;
         this.tache = tache;
+
+        this.aAlarme = false;
     }
 
     public Devoir(String matiere, String tache, int id_devoir) {
         this.matiere = matiere;
         this.tache = tache;
         this.id_devoir = id_devoir;
+
+        this.aAlarme = false;
     }
 
     public HashMap<String, String> obtenirDevoirPourAdapteur(){
@@ -53,5 +59,13 @@ public class Devoir {
 
     public void setId_devoir(int id_devoir) {
         this.id_devoir = id_devoir;
+    }
+
+    public boolean isaAlarme() {
+        return aAlarme;
+    }
+
+    public void setaAlarme(boolean aAlarme) {
+        this.aAlarme = aAlarme;
     }
 }
