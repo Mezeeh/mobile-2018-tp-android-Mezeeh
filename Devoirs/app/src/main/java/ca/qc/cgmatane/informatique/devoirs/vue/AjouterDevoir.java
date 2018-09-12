@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -32,13 +33,19 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
 
     protected DatePickerDialog dialogueChoixDate;
 
+    protected TimePickerDialog dialogueChoixHeure;
+
     protected int annee,
                     mois,
-                    jour;
+                    jour,
+                    heure,
+                    minute;
 
     protected int anneeAlarme,
                     moisAlarme,
-                    jourAlarme;
+                    jourAlarme,
+                    heureAlarme,
+                    minuteAlarme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,16 +100,35 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     }
 
     @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        this.annee = year;
-        this.mois = month;
-        this.jour = dayOfMonth;
+    public void onDateSet(DatePicker view, int annee, int mois, int jourDuMois) {
+        this.anneeAlarme = annee;
+        this.moisAlarme = mois;
+        this.jourAlarme = jourDuMois;
 
         Log.d("HELLO", "" + annee + " " + mois + " " + jour);
+
+        afficherDialogueChoixHeure();
+    }
+
+    private void afficherDialogueChoixHeure() {
+        heure = calendrier.get(Calendar.HOUR_OF_DAY);
+        minute = calendrier.get(Calendar.MINUTE);
+
+        dialogueChoixHeure = new TimePickerDialog(AjouterDevoir.this, AjouterDevoir.this, heure, minute, DateFormat.is24HourFormat(this));
+        dialogueChoixHeure.show();
     }
 
     @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    public void onTimeSet(TimePicker view, int heureDuJour, int minute) {
+        this.heureAlarme = heureDuJour;
+        this.minuteAlarme = minute;
 
+        Log.d("HELLO", "" + heureAlarme + " " + minuteAlarme);
+
+        remplissageChampAlarme();
+    }
+
+    private void remplissageChampAlarme() {
+        champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
     }
 }
