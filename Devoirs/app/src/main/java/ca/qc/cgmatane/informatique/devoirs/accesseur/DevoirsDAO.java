@@ -42,6 +42,7 @@ public class DevoirsDAO {
         int indexMatiere = curseur.getColumnIndex("matiere");
         int indexTache = curseur.getColumnIndex("tache");
         int indexTempsAlarme = curseur.getColumnIndex("temps_alarme");
+        int indexEstTermine = curseur.getColumnIndex("est_termine");
 
         for(curseur.moveToFirst() ; !curseur.isAfterLast() ; curseur.moveToNext()){
             int id_devoir = curseur.getInt(indexId_devoir);
@@ -50,20 +51,13 @@ public class DevoirsDAO {
 
             devoir = new Devoir(matiere, tache, id_devoir);
 
-            if(null != curseur.getString(indexTempsAlarme)) {
-                String[] tempsAlarme = curseur.getString(indexTempsAlarme).split("/");
-                int heureAlarme = Integer.parseInt(tempsAlarme[0]);
-                int minuteAlarme = Integer.parseInt(tempsAlarme[1]);
-                int jourAlarme = Integer.parseInt(tempsAlarme[2]);
-                int moisAlarme = Integer.parseInt(tempsAlarme[3]);
-                int anneeAlarme = Integer.parseInt(tempsAlarme[4]);
+            if(curseur.getInt(indexEstTermine) == 0 && null != curseur.getString(indexTempsAlarme)) {
+                boolean estTerminee = curseur.getInt(indexEstTermine) == 0 ? false : true;
+                long tempsAlarme = curseur.getInt(indexTempsAlarme);
 
                 devoir.setaAlarme(true);
-                devoir.setAnneeAlarme(anneeAlarme);
-                devoir.setMoisAlarme(moisAlarme);
-                devoir.setJourAlarme(jourAlarme);
-                devoir.setHeureAlarme(heureAlarme);
-                devoir.setMinuteAlarme(minuteAlarme);
+                devoir.setTempsAlarme(tempsAlarme);
+                devoir.setDevoirEstTermine(estTerminee);
             }
 
             this.listeDevoir.add(devoir);
@@ -95,8 +89,7 @@ public class DevoirsDAO {
                 String MODIFIER_DEVOIR;
 
                 if(devoirAModifier.isaAlarme()) {
-                    String tempsAlarme = devoirAModifier.getHeureAlarme() + "/" + devoirAModifier.getMinuteAlarme() + "/" + devoirAModifier.getJourAlarme() + "/" + devoirAModifier.getMoisAlarme() + "/" + devoirAModifier.getAnneeAlarme();
-                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + tempsAlarme + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
+                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + devoir.getTempsAlarme() + "', est_termine = '" + devoir.isDevoirEstTermine() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
                 } else {
                     MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
                 }
@@ -111,8 +104,7 @@ public class DevoirsDAO {
         String AJOUTER_DEVOIR;
 
         if(devoir.isaAlarme()) {
-            String tempsAlarme = devoir.getHeureAlarme() + "/" + devoir.getMinuteAlarme() + "/" + devoir.getJourAlarme() + "/" + devoir.getMoisAlarme() + "/" + devoir.getAnneeAlarme();
-            AJOUTER_DEVOIR = "insert into devoir(matiere, tache) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "', '" + tempsAlarme + "')";
+            AJOUTER_DEVOIR = "insert into devoir(matiere, tache) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "', '" + devoir.getTempsAlarme() + "', '" + devoir.isDevoirEstTermine() + "')";
         } else {
             AJOUTER_DEVOIR = "insert into devoir(matiere, tache) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "')";
         }

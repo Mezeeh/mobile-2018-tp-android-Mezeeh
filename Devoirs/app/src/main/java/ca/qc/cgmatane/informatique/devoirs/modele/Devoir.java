@@ -10,11 +10,9 @@ public class Devoir {
 
     protected boolean aAlarme;
 
-    protected int anneeAlarme,
-                    moisAlarme,
-                    jourAlarme,
-                    heureAlarme,
-                    minuteAlarme;
+    protected long tempsAlarme;
+
+    protected boolean devoirEstTermine;
 
     protected HashMap<String, String> devoirPourAdapteur;
 
@@ -23,6 +21,7 @@ public class Devoir {
         this.tache = tache;
 
         this.aAlarme = false;
+        this.devoirEstTermine = false;
     }
 
     public Devoir(String matiere, String tache, int id_devoir) {
@@ -31,6 +30,7 @@ public class Devoir {
         this.id_devoir = id_devoir;
 
         this.aAlarme = false;
+        this.devoirEstTermine = false;
     }
 
     public HashMap<String, String> obtenirDevoirPourAdapteur(){
@@ -75,43 +75,19 @@ public class Devoir {
         this.aAlarme = aAlarme;
     }
 
-    public int getAnneeAlarme() {
-        return anneeAlarme;
+    public long getTempsAlarme() {
+        return tempsAlarme;
     }
 
-    public void setAnneeAlarme(int anneeAlarme) {
-        this.anneeAlarme = anneeAlarme;
+    public void setTempsAlarme(long tempsAlarme) {
+        this.tempsAlarme = tempsAlarme;
     }
 
-    public int getMoisAlarme() {
-        return moisAlarme;
+    public boolean isDevoirEstTermine() {
+        return devoirEstTermine;
     }
 
-    public void setMoisAlarme(int moisAlarme) {
-        this.moisAlarme = moisAlarme;
-    }
-
-    public int getJourAlarme() {
-        return jourAlarme;
-    }
-
-    public void setJourAlarme(int jourAlarme) {
-        this.jourAlarme = jourAlarme;
-    }
-
-    public int getHeureAlarme() {
-        return heureAlarme;
-    }
-
-    public void setHeureAlarme(int heureAlarme) {
-        this.heureAlarme = heureAlarme;
-    }
-
-    public int getMinuteAlarme() {
-        return minuteAlarme;
-    }
-
-    public void setMinuteAlarme(int minuteAlarme) {
-        this.minuteAlarme = minuteAlarme;
+    public void setDevoirEstTermine(boolean devoirEstTermine) {
+        this.devoirEstTermine = devoirEstTermine;
     }
 }

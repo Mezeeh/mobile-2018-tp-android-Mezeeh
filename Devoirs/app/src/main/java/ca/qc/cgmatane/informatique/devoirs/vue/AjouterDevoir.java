@@ -12,6 +12,8 @@ import ca.qc.cgmatane.informatique.devoirs.R;
 import ca.qc.cgmatane.informatique.devoirs.accesseur.DevoirsDAO;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -31,12 +33,6 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     protected DatePickerDialog dialogueChoixDate;
 
     protected TimePickerDialog dialogueChoixHeure;
-
-    protected int annee,
-                    mois,
-                    jour,
-                    heure,
-                    minute;
 
     protected int anneeAlarme,
                     moisAlarme,
@@ -81,9 +77,9 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     private void afficherDialogueChoixDate() {
         calendrier = Calendar.getInstance();
 
-        annee = calendrier.get(Calendar.YEAR);
-        mois = calendrier.get(Calendar.MONTH);
-        jour = calendrier.get(Calendar.DAY_OF_MONTH);
+        int annee = calendrier.get(Calendar.YEAR);
+        int mois = calendrier.get(Calendar.MONTH);
+        int jour = calendrier.get(Calendar.DAY_OF_MONTH);
 
         dialogueChoixDate = new DatePickerDialog(AjouterDevoir.this, AjouterDevoir.this, annee, mois, jour);
         dialogueChoixDate.show();
@@ -94,11 +90,12 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
 
         devoir.setaAlarme(aAlarme);
         if(aAlarme){
-            devoir.setAnneeAlarme(anneeAlarme);
-            devoir.setMoisAlarme(moisAlarme);
-            devoir.setJourAlarme(jourAlarme);
-            devoir.setHeureAlarme(heureAlarme);
-            devoir.setMinuteAlarme(minuteAlarme);
+            try {
+                long tempsAlarme = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
+                devoir.setTempsAlarme(tempsAlarme);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         accesseurDevoirs.ajouterDevoir(devoir);
@@ -115,14 +112,14 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         this.moisAlarme = mois;
         this.jourAlarme = jourDuMois;
 
-        Log.d("HELLO", "" + annee + " " + mois + " " + jour);
+        Log.d("HELLO", "" + annee + " " + mois + " " + jourDuMois);
 
         afficherDialogueChoixHeure();
     }
 
     private void afficherDialogueChoixHeure() {
-        heure = calendrier.get(Calendar.HOUR_OF_DAY);
-        minute = calendrier.get(Calendar.MINUTE);
+        int heure = calendrier.get(Calendar.HOUR_OF_DAY);
+        int minute = calendrier.get(Calendar.MINUTE);
 
         dialogueChoixHeure = new TimePickerDialog(AjouterDevoir.this, AjouterDevoir.this, heure, minute, DateFormat.is24HourFormat(this));
         dialogueChoixHeure.show();
@@ -133,7 +130,7 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         this.heureAlarme = heureDuJour;
         this.minuteAlarme = minute;
 
-        Log.d("HELLO", "" + heureAlarme + " " + minuteAlarme);
+        Log.d("HELLO", "" + heureDuJour + " " + minute);
 
         remplissageChampAlarme();
     }

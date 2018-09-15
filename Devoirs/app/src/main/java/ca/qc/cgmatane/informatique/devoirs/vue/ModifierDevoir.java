@@ -12,6 +12,8 @@ import ca.qc.cgmatane.informatique.devoirs.R;
 import ca.qc.cgmatane.informatique.devoirs.accesseur.DevoirsDAO;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ModifierDevoir extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
@@ -31,12 +33,6 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     protected TimePickerDialog dialogueChoixHeure;
 
     protected TextView champAlarme;
-
-    protected int annee,
-                    mois,
-                    jour,
-                    heure,
-                    minute;
 
     protected int anneeAlarme,
                     moisAlarme,
@@ -69,7 +65,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
 
         champAlarme = findViewById(R.id.vue_modifier_devoir_temps_alarme);
         aAlarme = devoir.isaAlarme();
-        if(aAlarme) {
+       /* if(aAlarme) {
             heureAlarme = devoir.getHeureAlarme();
             minuteAlarme = devoir.getMinuteAlarme();
             jourAlarme = devoir.getJourAlarme();
@@ -77,7 +73,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
             anneeAlarme = devoir.getAnneeAlarme();
             champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
             Log.d("hello a", "" + heureAlarme);
-        }
+        }*/
 
         actionModifierDevoir = findViewById(R.id.action_modifier_devoir);
         actionModifierDevoir.setOnClickListener(new View.OnClickListener() {
@@ -102,11 +98,12 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         devoir = new Devoir(champMatiere.getText().toString(), champTache.getText().toString(), this.devoir.getId_devoir());
         devoir.setaAlarme(aAlarme);
         if(aAlarme){
-            devoir.setAnneeAlarme(anneeAlarme);
-            devoir.setMoisAlarme(moisAlarme);
-            devoir.setJourAlarme(jourAlarme);
-            devoir.setHeureAlarme(heureAlarme);
-            devoir.setMinuteAlarme(minuteAlarme);
+            try {
+                long tempsAlarme = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
+                devoir.setTempsAlarme(tempsAlarme);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         accesseurDevoirs.modifierDevoir(devoir);
@@ -129,17 +126,17 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     private void afficherDialogueChoixDate() {
         calendrier = Calendar.getInstance();
 
-        annee = calendrier.get(Calendar.YEAR);
-        mois = calendrier.get(Calendar.MONTH);
-        jour = calendrier.get(Calendar.DAY_OF_MONTH);
+        int annee = calendrier.get(Calendar.YEAR);
+        int mois = calendrier.get(Calendar.MONTH);
+        int jour = calendrier.get(Calendar.DAY_OF_MONTH);
 
         dialogueChoixDate = new DatePickerDialog(ModifierDevoir.this, ModifierDevoir.this, annee, mois, jour);
         dialogueChoixDate.show();
     }
 
     private void afficherDialogueChoixHeure() {
-        heure = calendrier.get(Calendar.HOUR_OF_DAY);
-        minute = calendrier.get(Calendar.MINUTE);
+        int heure = calendrier.get(Calendar.HOUR_OF_DAY);
+        int minute = calendrier.get(Calendar.MINUTE);
 
         dialogueChoixHeure = new TimePickerDialog(ModifierDevoir.this, ModifierDevoir.this, heure, minute, DateFormat.is24HourFormat(this));
         dialogueChoixHeure.show();
@@ -158,6 +155,6 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     private void remplissageChampAlarme() {
         aAlarme = true;
         actionAjouterAlarme.setText("Modifier l'alarme");
-        champAlarme.setText("Alarme he: " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
+        champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
     }
 }

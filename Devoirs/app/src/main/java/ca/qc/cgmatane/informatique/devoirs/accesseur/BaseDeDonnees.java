@@ -24,7 +24,7 @@ public class BaseDeDonnees extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "create table devoir(id_devoir INTEGER PRIMARY KEY, matiere TEXT, tache TEXT, temps_alarme TEXT)";
+        String CREATE_TABLE = "create table devoir(id_devoir INTEGER PRIMARY KEY, matiere TEXT, tache TEXT, temps_alarme INTEGER, est_termine INTEGER)";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -33,9 +33,9 @@ public class BaseDeDonnees extends SQLiteOpenHelper {
         String DELETE = "delete from devoir where 1 = 1";
         db.execSQL(DELETE);
 
-        String INSERT_1 = "insert into devoir(id_devoir, matiere, tache, temps_alarme) VALUES('1', 'Programmation Mobile', 'Release initial du travail pratique Android Java', null)";
-        String INSERT_2 = "insert into devoir(id_devoir, matiere, tache, temps_alarme) VALUES('2', 'Espagnol', 'Faire page 14 et 18 dans le cahier', null)";
-        String INSERT_3 = "insert into devoir(id_devoir, matiere, tache, temps_alarme) VALUES('3', 'Ethique', 'Lire page 4 a 19 des notes de cours', null)";
+        String INSERT_1 = "insert into devoir(id_devoir, matiere, tache, temps_alarme, est_termine) VALUES('1', 'Programmation Mobile', 'Release initial du travail pratique Android Java', null, 0)";
+        String INSERT_2 = "insert into devoir(id_devoir, matiere, tache, temps_alarme, est_termine) VALUES('2', 'Espagnol', 'Faire page 14 et 18 dans le cahier', null, 0)";
+        String INSERT_3 = "insert into devoir(id_devoir, matiere, tache, temps_alarme, est_termine) VALUES('3', 'Ethique', 'Lire page 4 a 19 des notes de cours', null, 0)";
 
         db.execSQL(INSERT_1);
         db.execSQL(INSERT_2);
@@ -46,7 +46,7 @@ public class BaseDeDonnees extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 //        String DETRUIRE_TABLE = "drop table devoir";
 //        db.execSQL(DETRUIRE_TABLE);
-        String CREER_TABLE = "CREATE TABLE devoir(id_devoir INTEGER PRIMARY KEY, matiere TEXT, tache TEXT, temps_alarme TEXT)";
+        String CREER_TABLE = "CREATE TABLE devoir(id_devoir INTEGER PRIMARY KEY, matiere TEXT, tache TEXT, temps_alarme INTEGER, est_termine INTEGER)";
         db.execSQL(CREER_TABLE);
     }
 }
