@@ -15,6 +15,7 @@ import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ModifierDevoir extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
     protected DevoirsDAO accesseurDevoirs;
@@ -65,15 +66,15 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
 
         champAlarme = findViewById(R.id.vue_modifier_devoir_temps_alarme);
         aAlarme = devoir.isaAlarme();
-       /* if(aAlarme) {
-            heureAlarme = devoir.getHeureAlarme();
+        if(aAlarme) {
+            Log.d("Hello", "" + devoir.getTempsAlarme());
+            /*heureAlarme = devoir.getHeureAlarme();
             minuteAlarme = devoir.getMinuteAlarme();
             jourAlarme = devoir.getJourAlarme();
             moisAlarme = devoir.getMoisAlarme();
-            anneeAlarme = devoir.getAnneeAlarme();
-            champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
-            Log.d("hello a", "" + heureAlarme);
-        }*/
+            anneeAlarme = devoir.getAnneeAlarme();*/
+            champAlarme.setText("Alarme : " + new SimpleDateFormat("hh:mm dd/MM/yyyy").format(new Date((long) (devoir.getTempsAlarme() * 1000))));
+        }
 
         actionModifierDevoir = findViewById(R.id.action_modifier_devoir);
         actionModifierDevoir.setOnClickListener(new View.OnClickListener() {

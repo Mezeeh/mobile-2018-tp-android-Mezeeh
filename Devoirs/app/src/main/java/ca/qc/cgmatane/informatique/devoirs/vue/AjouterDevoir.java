@@ -26,7 +26,7 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     protected TextView champAlarme;
 
     protected Button actionAjouterDevoir,
-                        actionAjouterAlarme;
+                        actionSupprimerAlarme;
 
     protected Calendar calendrier;
 
@@ -55,6 +55,12 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         champTache = findViewById(R.id.vue_ajouter_devoir_tache);
 
         champAlarme = findViewById(R.id.vue_ajouter_devoir_temps_alarme);
+        champAlarme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                afficherDialogueChoixDate();
+            }
+        });
 
         actionAjouterDevoir = findViewById(R.id.appliquer_action_confirmer_ajouter);
         actionAjouterDevoir.setOnClickListener(new View.OnClickListener() {
@@ -62,14 +68,13 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
             public void onClick(View v) {
                 ajouterDevoir();
             }
-        });
+        });;
 
-        actionAjouterAlarme = findViewById(R.id.action_ajouter_devoir_ajouter_alarme);
-        actionAjouterAlarme.setOnClickListener(new View.OnClickListener() {
+        actionSupprimerAlarme = findViewById(R.id.action_ajouter_devoir_supprimer_alarme);
+        actionSupprimerAlarme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Hello", "HEY");
-                afficherDialogueChoixDate();
+                supprimerAlarme();
             }
         });
     }
@@ -90,12 +95,15 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
 
         devoir.setaAlarme(aAlarme);
         if(aAlarme){
+            long tempsAlarmeMsec = 0;
             try {
-                long tempsAlarme = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
-                devoir.setTempsAlarme(tempsAlarme);
+                tempsAlarmeMsec = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            Log.d("HELLO", "alarmeEnMsec " + tempsAlarmeMsec);
+            devoir.setTempsAlarme(tempsAlarmeMsec);
         }
 
         accesseurDevoirs.ajouterDevoir(devoir);
@@ -109,10 +117,10 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     @Override
     public void onDateSet(DatePicker view, int annee, int mois, int jourDuMois) {
         this.anneeAlarme = annee;
-        this.moisAlarme = mois;
+        this.moisAlarme = mois + 1; // + 1 parce que les mois commence a zero donc decembre = 11
         this.jourAlarme = jourDuMois;
 
-        Log.d("HELLO", "" + annee + " " + mois + " " + jourDuMois);
+        Log.d("HELLO", "" + this.anneeAlarme + " " + this.moisAlarme + " " + this.jourAlarme);
 
         afficherDialogueChoixHeure();
     }
@@ -130,14 +138,19 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         this.heureAlarme = heureDuJour;
         this.minuteAlarme = minute;
 
-        Log.d("HELLO", "" + heureDuJour + " " + minute);
+        Log.d("HELLO", "" + this.heureAlarme + " " + this.minuteAlarme);
 
         remplissageChampAlarme();
     }
 
     private void remplissageChampAlarme() {
         aAlarme = true;
-        actionAjouterAlarme.setText("Modifier l'alarme");
-        champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
+        actionSupprimerAlarme.setVisibility(View.VISIBLE);
+        champAlarme.setText(String.format("%02d", this.heureAlarme) + ":" + String.format("%02d", this.minuteAlarme) + " " + String.format("%02d", this.jourAlarme) + "/" + String.format("%02d", this.moisAlarme) + "/" + this.anneeAlarme);
+    }
+
+    private void supprimerAlarme(){
+        aAlarme = false;
+        champAlarme.setText("");
     }
 }

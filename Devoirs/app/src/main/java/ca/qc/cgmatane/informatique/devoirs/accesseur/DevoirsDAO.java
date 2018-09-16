@@ -53,8 +53,8 @@ public class DevoirsDAO {
 
             if(curseur.getInt(indexEstTermine) == 0 && null != curseur.getString(indexTempsAlarme)) {
                 boolean estTerminee = curseur.getInt(indexEstTermine) == 0 ? false : true;
-                long tempsAlarme = curseur.getInt(indexTempsAlarme);
-
+                long tempsAlarme = (long) curseur.getDouble(indexTempsAlarme);
+                Log.d("HELLO", "penis " + tempsAlarme);
                 devoir.setaAlarme(true);
                 devoir.setTempsAlarme(tempsAlarme);
                 devoir.setDevoirEstTermine(estTerminee);
@@ -89,7 +89,7 @@ public class DevoirsDAO {
                 String MODIFIER_DEVOIR;
 
                 if(devoirAModifier.isaAlarme()) {
-                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + devoir.getTempsAlarme() + "', est_termine = '" + devoir.isDevoirEstTermine() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
+                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + devoir.getTempsAlarme() + "', est_termine = '" + (devoir.isDevoirEstTermine() ? 1 : 0) + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
                 } else {
                     MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
                 }
@@ -104,7 +104,7 @@ public class DevoirsDAO {
         String AJOUTER_DEVOIR;
 
         if(devoir.isaAlarme()) {
-            AJOUTER_DEVOIR = "insert into devoir(matiere, tache) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "', '" + devoir.getTempsAlarme() + "', '" + devoir.isDevoirEstTermine() + "')";
+            AJOUTER_DEVOIR = "insert into devoir(matiere, tache, temps_alarme, est_termine) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "', '" + devoir.getTempsAlarme() + "', '" + (devoir.isDevoirEstTermine() ? 1 : 0) + "')";
         } else {
             AJOUTER_DEVOIR = "insert into devoir(matiere, tache) VALUES('" + devoir.getMatiere() + "', '" + devoir.getTache() + "')";
         }

@@ -34,11 +34,22 @@
             android:id="@+id/vue_ajouter_devoir_tache"/>
     <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/vue_ajouter_devoir_temps_alarme"/>
-    <Button
-            android:text="Ajouter une alarme"
+            android:layout_height="wrap_content" android:id="@+id/textView4" android:text="Alarme"/>
+    <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/action_ajouter_devoir_ajouter_alarme"/>
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:id="@+id/vue_ajouter_devoir_temps_alarme"/>
+    <Button
+            android:text="Supprimer l'alarme"
+            android:visibility="gone"
+            android:id="@+id/action_ajouter_devoir_supprimer_alarme" android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     <Button
             android:text="Ajouter le devoir"
             android:layout_width="match_parent"
