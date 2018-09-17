@@ -21,9 +21,8 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     protected Devoir devoir;
 
     protected EditText champMatiere,
-                        champTache;
-
-    protected TextView champAlarme;
+                        champTache,
+                        champAlarme;
 
     protected Button actionAjouterDevoir,
                         actionSupprimerAlarme;
@@ -120,8 +119,6 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         this.moisAlarme = mois + 1; // + 1 parce que les mois commence a zero donc decembre = 11
         this.jourAlarme = jourDuMois;
 
-        Log.d("HELLO", "" + this.anneeAlarme + " " + this.moisAlarme + " " + this.jourAlarme);
-
         afficherDialogueChoixHeure();
     }
 
@@ -138,8 +135,6 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
         this.heureAlarme = heureDuJour;
         this.minuteAlarme = minute;
 
-        Log.d("HELLO", "" + this.heureAlarme + " " + this.minuteAlarme);
-
         remplissageChampAlarme();
     }
 
@@ -152,5 +147,6 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
     private void supprimerAlarme(){
         aAlarme = false;
         champAlarme.setText("");
+        actionSupprimerAlarme.setVisibility(View.GONE);
     }
 }

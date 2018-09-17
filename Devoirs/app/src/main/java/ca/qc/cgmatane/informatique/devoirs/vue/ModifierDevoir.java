@@ -22,18 +22,17 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     protected Devoir devoir;
 
     protected EditText champMatiere,
-                        champTache;
+                        champTache,
+                        champAlarme;
 
     protected Button actionModifierDevoir,
-                        actionAjouterAlarme;
+                        actionSupprimerAlarme;
 
     protected Calendar calendrier;
 
     protected DatePickerDialog dialogueChoixDate;
 
     protected TimePickerDialog dialogueChoixHeure;
-
-    protected TextView champAlarme;
 
     protected int anneeAlarme,
                     moisAlarme,
@@ -65,15 +64,24 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         champTache.setText(devoir.getTache());
 
         champAlarme = findViewById(R.id.vue_modifier_devoir_temps_alarme);
+        champAlarme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                afficherDialogueChoixDate();
+            }
+        });
+
         aAlarme = devoir.isaAlarme();
         if(aAlarme) {
-            Log.d("Hello", "" + devoir.getTempsAlarme());
-            /*heureAlarme = devoir.getHeureAlarme();
-            minuteAlarme = devoir.getMinuteAlarme();
-            jourAlarme = devoir.getJourAlarme();
-            moisAlarme = devoir.getMoisAlarme();
-            anneeAlarme = devoir.getAnneeAlarme();*/
-            champAlarme.setText("Alarme : " + new SimpleDateFormat("hh:mm dd/MM/yyyy").format(new Date((long) (devoir.getTempsAlarme() * 1000))));
+            calendrier = Calendar.getInstance();
+            calendrier.setTimeInMillis(devoir.getTempsAlarme());
+            this.heureAlarme = calendrier.get(Calendar.HOUR_OF_DAY);
+            this.minuteAlarme = calendrier.get(Calendar.MINUTE);
+            this.jourAlarme = calendrier.get(Calendar.DAY_OF_MONTH);
+            this.moisAlarme = calendrier.get(Calendar.MONTH) + 1;
+            this.anneeAlarme = calendrier.get(Calendar.YEAR);
+
+            champAlarme.setText(String.format("%02d", this.heureAlarme) + ":" + String.format("%02d", this.minuteAlarme) + " " + String.format("%02d", this.jourAlarme) + "/" + String.format("%02d", this.moisAlarme) + "/" + this.anneeAlarme);
         }
 
         actionModifierDevoir = findViewById(R.id.action_modifier_devoir);
@@ -84,27 +92,38 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        actionAjouterAlarme = findViewById(R.id.action_modifier_devoir_ajouter_alarme);
-        if(aAlarme)
-            actionAjouterAlarme.setText("Modifier l'alarme");
-        actionAjouterAlarme.setOnClickListener(new View.OnClickListener() {
+        actionSupprimerAlarme = findViewById(R.id.action_modifier_devoir_supprimer_alarme);
+        actionSupprimerAlarme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                afficherDialogueChoixDate();
+                supprimerAlarme();
             }
         });
+        if(aAlarme)
+            actionSupprimerAlarme.setVisibility(View.VISIBLE);
+    }
+
+    private void supprimerAlarme() {
+        aAlarme = false;
+        devoir.setaAlarme(aAlarme);
+        devoir.setTempsAlarme(0);
+        champAlarme.setText("");
+        actionSupprimerAlarme.setVisibility(View.GONE);
     }
 
     private void modifierDevoir(){
         devoir = new Devoir(champMatiere.getText().toString(), champTache.getText().toString(), this.devoir.getId_devoir());
         devoir.setaAlarme(aAlarme);
         if(aAlarme){
+            long tempsAlarmeMsec = 0;
             try {
-                long tempsAlarme = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
-                devoir.setTempsAlarme(tempsAlarme);
+                tempsAlarmeMsec = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            Log.d("HELLO", "alarmeEnMsec " + tempsAlarmeMsec);
+            devoir.setTempsAlarme(tempsAlarmeMsec);
         }
 
         accesseurDevoirs.modifierDevoir(devoir);
@@ -128,7 +147,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         calendrier = Calendar.getInstance();
 
         int annee = calendrier.get(Calendar.YEAR);
-        int mois = calendrier.get(Calendar.MONTH);
+        int mois = calendrier.get(Calendar.MONTH) + 1; // +1 parce que larray des mois commence a 0 donc decembre = 11
         int jour = calendrier.get(Calendar.DAY_OF_MONTH);
 
         dialogueChoixDate = new DatePickerDialog(ModifierDevoir.this, ModifierDevoir.this, annee, mois, jour);
@@ -148,14 +167,12 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         this.heureAlarme = heureDuJour;
         this.minuteAlarme = minute;
 
-        Log.d("HELLO", "" + heureAlarme + " " + minuteAlarme);
-
         remplissageChampAlarme();
     }
 
     private void remplissageChampAlarme() {
         aAlarme = true;
-        actionAjouterAlarme.setText("Modifier l'alarme");
-        champAlarme.setText("Alarme : " + heureAlarme + ":" + minuteAlarme + " " + jourAlarme + "/" + moisAlarme + "/" + anneeAlarme);
+        actionSupprimerAlarme.setVisibility(View.VISIBLE);
+        champAlarme.setText(String.format("%02d", this.heureAlarme) + ":" + String.format("%02d", this.minuteAlarme) + " " + String.format("%02d", this.jourAlarme) + "/" + String.format("%02d", this.moisAlarme) + "/" + this.anneeAlarme);
     }
 }

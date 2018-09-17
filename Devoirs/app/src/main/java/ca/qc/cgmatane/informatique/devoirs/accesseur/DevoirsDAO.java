@@ -1,7 +1,6 @@
 package ca.qc.cgmatane.informatique.devoirs.accesseur;
 
 import android.database.Cursor;
-import android.util.Log;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
 import java.util.ArrayList;
@@ -51,10 +50,9 @@ public class DevoirsDAO {
 
             devoir = new Devoir(matiere, tache, id_devoir);
 
-            if(curseur.getInt(indexEstTermine) == 0 && null != curseur.getString(indexTempsAlarme)) {
+            if(curseur.getInt(indexEstTermine) == 0 && 0 != curseur.getDouble(indexTempsAlarme)) {
                 boolean estTerminee = curseur.getInt(indexEstTermine) == 0 ? false : true;
                 long tempsAlarme = (long) curseur.getDouble(indexTempsAlarme);
-                Log.d("HELLO", "penis " + tempsAlarme);
                 devoir.setaAlarme(true);
                 devoir.setTempsAlarme(tempsAlarme);
                 devoir.setDevoirEstTermine(estTerminee);
@@ -87,12 +85,11 @@ public class DevoirsDAO {
         for(Devoir devoir : this.listeDevoir){
             if(devoir.getId_devoir() == devoirAModifier.getId_devoir()){
                 String MODIFIER_DEVOIR;
-
-                if(devoirAModifier.isaAlarme()) {
-                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + devoir.getTempsAlarme() + "', est_termine = '" + (devoir.isDevoirEstTermine() ? 1 : 0) + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
-                } else {
-                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
-                }
+                //if(devoirAModifier.isaAlarme()) {
+                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + (devoirAModifier.getTempsAlarme() == 0 ? null : devoirAModifier.getTempsAlarme()) + "', est_termine = '" + (devoirAModifier.isDevoirEstTermine() ? 1 : 0) + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
+                //} //else {
+                    //MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
+                //}
 
                 baseDeDonnees.getWritableDatabase().execSQL(MODIFIER_DEVOIR);
                 break;
