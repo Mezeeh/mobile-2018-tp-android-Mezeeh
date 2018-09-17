@@ -84,12 +84,7 @@ public class DevoirsDAO {
     public void modifierDevoir(Devoir devoirAModifier){
         for(Devoir devoir : this.listeDevoir){
             if(devoir.getId_devoir() == devoirAModifier.getId_devoir()){
-                String MODIFIER_DEVOIR;
-                //if(devoirAModifier.isaAlarme()) {
-                    MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + (devoirAModifier.getTempsAlarme() == 0 ? null : devoirAModifier.getTempsAlarme()) + "', est_termine = '" + (devoirAModifier.isDevoirEstTermine() ? 1 : 0) + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
-                //} //else {
-                    //MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
-                //}
+                String MODIFIER_DEVOIR = "UPDATE devoir SET matiere = '" + devoirAModifier.getMatiere() + "', tache = '" + devoirAModifier.getTache() + "' , temps_alarme = '" + (devoirAModifier.getTempsAlarme() == 0 ? null : devoirAModifier.getTempsAlarme()) + "', est_termine = '" + (devoirAModifier.isDevoirEstTermine() ? 1 : 0) + "' WHERE id_devoir =" + devoirAModifier.getId_devoir();
 
                 baseDeDonnees.getWritableDatabase().execSQL(MODIFIER_DEVOIR);
                 break;

@@ -1,8 +1,13 @@
 package ca.qc.cgmatane.informatique.devoirs.modele;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import ca.qc.cgmatane.informatique.devoirs.Alarme;
+
 import java.util.HashMap;
 
-public class Devoir {
+public class Devoir extends AppCompatActivity {
     protected String matiere,
                     tache;
 
@@ -41,6 +46,13 @@ public class Devoir {
         devoirPourAdapteur.put("id_devoir", "" + this.id_devoir);
 
         return devoirPourAdapteur;
+    }
+
+    Alarme alarmeTest;
+    public void ajouterAlarme(Context context){
+        Intent test = new Intent(getApplicationContext(), Alarme.class);
+        startActivity(test);
+        alarmeTest.ajouterAlarme(tempsAlarme);
     }
 
     public String getMatiere() {

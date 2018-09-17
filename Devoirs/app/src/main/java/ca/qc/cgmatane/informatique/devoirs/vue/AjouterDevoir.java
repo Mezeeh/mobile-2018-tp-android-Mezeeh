@@ -1,13 +1,14 @@
 package ca.qc.cgmatane.informatique.devoirs.vue;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.app.*;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import ca.qc.cgmatane.informatique.devoirs.AlarmeReception;
 import ca.qc.cgmatane.informatique.devoirs.R;
 import ca.qc.cgmatane.informatique.devoirs.accesseur.DevoirsDAO;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
@@ -103,6 +104,18 @@ public class AjouterDevoir extends AppCompatActivity implements DatePickerDialog
 
             Log.d("HELLO", "alarmeEnMsec " + tempsAlarmeMsec);
             devoir.setTempsAlarme(tempsAlarmeMsec);
+
+            //devoir.ajouterAlarme(AjouterDevoir.this);
+            Intent intententionLancerAlarme = new Intent(this, AlarmeReception.class);
+            intententionLancerAlarme.putExtra("matiere", devoir.getMatiere());
+            intententionLancerAlarme.putExtra("tache", devoir.getTache());
+
+            PendingIntent attenteIntentionLancerAlarme = PendingIntent.getBroadcast(this, 0, intententionLancerAlarme, 0);
+           
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, attenteIntentionLancerAlarme);
+
+            Toast.makeText(this, "Alarme dans " + 3 + " secondes",Toast.LENGTH_LONG).show();
         }
 
         accesseurDevoirs.ajouterDevoir(devoir);
