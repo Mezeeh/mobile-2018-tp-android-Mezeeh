@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import ca.qc.cgmatane.informatique.devoirs.R;
@@ -40,6 +41,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
                     minuteAlarme;
 
     protected boolean aAlarme,
+                        devoirTermine,
                         tempsAlarmeDevoirEstPasse;
 
     @Override
@@ -56,7 +58,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         devoir = accesseurDevoirs.trouverDevoir(id_livre);
 
         this.aAlarme = devoir.isaAlarme();
-        this.tempsAlarmeDevoirEstPasse = (devoir.getTempsAlarme() < System.currentTimeMillis());
+        this.tempsAlarmeDevoirEstPasse = ((devoir.getTempsAlarme() - System.currentTimeMillis()) < 0);
 
         champMatiere = findViewById(R.id.vue_modifier_devoir_champ_matiere);
         champTache = findViewById(R.id.vue_modifier_devoir_champ_tache);
@@ -127,23 +129,26 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     private void terminerDevoir(){
         tempsAlarmeDevoirEstPasse = true;
         devoir.setDevoirEstTermine(true);
+        devoirTermine = devoir.isDevoirEstTermine();
         actionTerminerAlarme.setVisibility(View.GONE);
     }
 
     private void modifierDevoir(){
         devoir = new Devoir(champMatiere.getText().toString(), champTache.getText().toString(), this.devoir.getId_devoir());
         devoir.setaAlarme(aAlarme);
-        devoir.setDevoirEstTermine(tempsAlarmeDevoirEstPasse);
-        if(!tempsAlarmeDevoirEstPasse && aAlarme){
+        devoir.setDevoirEstTermine(devoirTermine);
+        if(!devoir.isDevoirEstTermine() && aAlarme){
             long tempsAlarmeMsec = 0;
             try {
                 tempsAlarmeMsec = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
+                tempsAlarmeDevoirEstPasse = ((tempsAlarmeMsec - System.currentTimeMillis()) < 0);
                 devoir.setTempsAlarme(tempsAlarmeMsec);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            devoir.ajouterAlarme(this);
+            if(!tempsAlarmeDevoirEstPasse)
+                devoir.ajouterAlarme(this);
         }
 
         accesseurDevoirs.modifierDevoir(devoir);
@@ -157,7 +162,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     @Override
     public void onDateSet(DatePicker view, int annee, int mois, int jourDuMois) {
         this.anneeAlarme = annee;
-        this.moisAlarme = mois;
+        this.moisAlarme = mois + 1; // +1 parce que larray des mois commence a 0 donc decembre = 11
         this.jourAlarme = jourDuMois;
 
         afficherDialogueChoixHeure();
@@ -167,7 +172,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         calendrier = Calendar.getInstance();
 
         int annee = calendrier.get(Calendar.YEAR);
-        int mois = calendrier.get(Calendar.MONTH) + 1; // +1 parce que larray des mois commence a 0 donc decembre = 11
+        int mois = calendrier.get(Calendar.MONTH);
         int jour = calendrier.get(Calendar.DAY_OF_MONTH);
 
         dialogueChoixDate = new DatePickerDialog(ModifierDevoir.this, ModifierDevoir.this, annee, mois, jour);

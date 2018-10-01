@@ -20,6 +20,7 @@ public class Alarme extends AppCompatActivity {
         String matiere = parametres.getString("matiere");
         String tache = parametres.getString("tache");
         long tempsAlarme = parametres.getLong("tempsAlarme");
+        tempsAlarme = System.currentTimeMillis() + 3000;
 
         Intent intententionLancerAlarme = new Intent(this, AlarmeReception.class);
         intententionLancerAlarme.putExtra("matiere", matiere);
