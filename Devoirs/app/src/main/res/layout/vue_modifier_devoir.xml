@@ -60,6 +60,11 @@
             android:layout_height="wrap_content" android:id="@+id/action_modifier_devoir_supprimer_alarme"
             android:visibility="gone"/>
     <Button
+            android:text="Terminé"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/action_modifier_devoir_terminer_devoir"
+            android:visibility="gone"/>
+    <Button
             android:id="@+id/action_modifier_devoir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

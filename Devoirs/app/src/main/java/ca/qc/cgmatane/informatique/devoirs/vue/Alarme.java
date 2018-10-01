@@ -1,4 +1,4 @@
-package ca.qc.cgmatane.informatique.devoirs;
+package ca.qc.cgmatane.informatique.devoirs.vue;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+import ca.qc.cgmatane.informatique.devoirs.modele.AlarmeReception;
+import ca.qc.cgmatane.informatique.devoirs.R;
 
 public class Alarme extends AppCompatActivity {
 

@@ -45,17 +45,7 @@ public class Devoirs extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View vue, int positionDansAdapteur, long positionItem) {
                 ListView vueListeDevoir = (ListView) vue.getParent();
 
-//                Log.d("Journalisation", "positionItem : " + positionItem);
-
                 HashMap<String, String> devoir = (HashMap<String, String>) vueListeDevoir.getItemAtPosition((int) positionItem);
-
-                /*Toast message = Toast.makeText(getApplicationContext(),
-                        "Position : " + positionItem +
-                                " Matière : " + devoir.get("matiere") +
-                                " Tâche : " + devoir.get("tache"),
-                        Toast.LENGTH_SHORT);
-
-                message.show();*/
 
                 intentionNaviguerModifierDevoir = new Intent(Devoirs.this, ModifierDevoir.class);
                 intentionNaviguerModifierDevoir.putExtra("id_devoir", devoir.get("id_devoir"));

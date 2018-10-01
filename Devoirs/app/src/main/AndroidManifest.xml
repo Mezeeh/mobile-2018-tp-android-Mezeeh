@@ -20,10 +20,10 @@
         </activity>
         <activity android:name=".vue.ModifierDevoir">
         </activity>
-        <activity android:name=".Alarme">
+        <activity android:name=".vue.Alarme">
         </activity>
 
-        <receiver android:name=".AlarmeReception"></receiver>
+        <receiver android:name=".modele.AlarmeReception"></receiver>
     </application>
 
 </manifest>

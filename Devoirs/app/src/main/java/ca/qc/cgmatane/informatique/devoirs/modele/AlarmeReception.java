@@ -1,14 +1,14 @@
-package ca.qc.cgmatane.informatique.devoirs;
+package ca.qc.cgmatane.informatique.devoirs.modele;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import ca.qc.cgmatane.informatique.devoirs.R;
 
 public class AlarmeReception extends BroadcastReceiver {
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import ca.qc.cgmatane.informatique.devoirs.Alarme;
+import ca.qc.cgmatane.informatique.devoirs.vue.Alarme;
 
 import java.util.HashMap;
 

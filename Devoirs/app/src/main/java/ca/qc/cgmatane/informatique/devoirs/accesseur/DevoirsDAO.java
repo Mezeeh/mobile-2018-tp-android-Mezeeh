@@ -51,14 +51,15 @@ public class DevoirsDAO {
             devoir = new Devoir(matiere, tache, id_devoir);
 
             if(curseur.getInt(indexEstTermine) == 0 && 0 != curseur.getDouble(indexTempsAlarme)) {
-                boolean estTerminee = curseur.getInt(indexEstTermine) == 0 ? false : true;
                 long tempsAlarme = (long) curseur.getDouble(indexTempsAlarme);
                 devoir.setaAlarme(true);
                 devoir.setTempsAlarme(tempsAlarme);
-                devoir.setDevoirEstTermine(estTerminee);
             }
 
-            this.listeDevoir.add(devoir);
+            if(curseur.getInt(indexEstTermine) == 0){
+                devoir.setDevoirEstTermine(false);
+                this.listeDevoir.add(devoir);
+            }
         }
     }
 
