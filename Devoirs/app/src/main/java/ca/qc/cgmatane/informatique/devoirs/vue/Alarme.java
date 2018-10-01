@@ -20,7 +20,6 @@ public class Alarme extends AppCompatActivity {
         String matiere = parametres.getString("matiere");
         String tache = parametres.getString("tache");
         long tempsAlarme = parametres.getLong("tempsAlarme");
-        tempsAlarme = System.currentTimeMillis() + 3000;
 
         Intent intententionLancerAlarme = new Intent(this, AlarmeReception.class);
         intententionLancerAlarme.putExtra("matiere", matiere);
@@ -31,7 +30,7 @@ public class Alarme extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, tempsAlarme, attenteIntentionLancerAlarme);
 
-        Toast.makeText(this, "Alarme dans " + ((tempsAlarme - System.currentTimeMillis()) / 1000) + " secondes",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Alarme dans " + ((tempsAlarme - System.currentTimeMillis()) / 1000) + " secondes",Toast.LENGTH_LONG).show();
         this.finish();
     }
 }

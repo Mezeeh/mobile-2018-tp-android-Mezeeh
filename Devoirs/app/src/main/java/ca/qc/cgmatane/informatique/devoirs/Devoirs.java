@@ -70,9 +70,9 @@ public class Devoirs extends AppCompatActivity {
         SimpleAdapter adapteur = new SimpleAdapter(
                 this,
                 listeDevoir,
-                android.R.layout.two_line_list_item,
-                new String[] {"matiere","tache"},
-                new int[] {android.R.id.text1, android.R.id.text2});
+                R.layout.affichage_menu_devoirs,
+                new String[] {"matiere","tache", "tempsAlarme"},
+                new int[] {R.id.matire, R.id.tache, R.id.temps_alarme});
 
         vueListeDevoir.setAdapter(adapteur);
     }

@@ -119,8 +119,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     }
 
     private void supprimerAlarme() {
-        aAlarme = false;
-        devoir.setaAlarme(aAlarme);
+        devoir.setaAlarme(false);
         devoir.setTempsAlarme(0);
         champAlarme.setText("");
         actionSupprimerAlarme.setVisibility(View.GONE);
@@ -147,8 +146,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
                 e.printStackTrace();
             }
 
-            if(!tempsAlarmeDevoirEstPasse)
-                devoir.ajouterAlarme(this);
+            devoir.ajouterAlarme(this);
         }
 
         accesseurDevoirs.modifierDevoir(devoir);

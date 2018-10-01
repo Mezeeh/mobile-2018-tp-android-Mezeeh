@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import ca.qc.cgmatane.informatique.devoirs.vue.Alarme;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Devoir extends AppCompatActivity {
@@ -47,16 +48,27 @@ public class Devoir extends AppCompatActivity {
         devoirPourAdapteur.put("matiere", this.matiere);
         devoirPourAdapteur.put("tache", this.tache);
         devoirPourAdapteur.put("id_devoir", "" + this.id_devoir);
+        if(this.tempsAlarme > 0){
+            Calendar calendrier = Calendar.getInstance();
+            calendrier.setTimeInMillis(this.getTempsAlarme());
+
+            String momentAlarme = (String.format("%02d", calendrier.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", calendrier.get(Calendar.MINUTE)) + " " + String.format("%02d", calendrier.get(Calendar.DAY_OF_MONTH)) + "/" + String.format("%02d", calendrier.get(Calendar.MONTH) + 1) + "/" + calendrier.get(Calendar.YEAR));
+
+            devoirPourAdapteur.put("tempsAlarme", "" + momentAlarme);
+        }
+        else
+            devoirPourAdapteur.put("tempsAlarme", "Aucune alarme programmée");
 
         return devoirPourAdapteur;
     }
 
+    Activity activite;
     public void ajouterAlarme(Context context){
         Intent intententionLancerAlarme = new Intent(context, Alarme.class);
         intententionLancerAlarme.putExtra("matiere", this.getMatiere());
         intententionLancerAlarme.putExtra("tache", this.getTache());
         intententionLancerAlarme.putExtra("tempsAlarme", this.getTempsAlarme());
-        Activity activite = (Activity) context;
+        activite = (Activity) context;
 
         activite.startActivityForResult(intententionLancerAlarme, ACTIVITE_AJOUTER_ALARME);
     }
