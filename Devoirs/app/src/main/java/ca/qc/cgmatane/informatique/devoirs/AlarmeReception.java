@@ -9,8 +9,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
-import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
 public class AlarmeReception extends BroadcastReceiver {
 

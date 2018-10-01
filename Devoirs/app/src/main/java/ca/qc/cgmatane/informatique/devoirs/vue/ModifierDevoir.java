@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import ca.qc.cgmatane.informatique.devoirs.R;
@@ -15,7 +14,6 @@ import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class ModifierDevoir extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
     protected DevoirsDAO accesseurDevoirs;
@@ -118,12 +116,12 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
             long tempsAlarmeMsec = 0;
             try {
                 tempsAlarmeMsec = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
+                devoir.setTempsAlarme(tempsAlarmeMsec);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            Log.d("HELLO", "alarmeEnMsec " + tempsAlarmeMsec);
-            devoir.setTempsAlarme(tempsAlarmeMsec);
+            devoir.ajouterAlarme(this);
         }
 
         accesseurDevoirs.modifierDevoir(devoir);

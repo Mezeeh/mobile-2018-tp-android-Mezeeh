@@ -1,5 +1,6 @@
 package ca.qc.cgmatane.informatique.devoirs.modele;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,8 @@ import ca.qc.cgmatane.informatique.devoirs.Alarme;
 import java.util.HashMap;
 
 public class Devoir extends AppCompatActivity {
+    protected static final int ACTIVITE_AJOUTER_ALARME = 3;
+
     protected String matiere,
                     tache;
 
@@ -48,11 +51,22 @@ public class Devoir extends AppCompatActivity {
         return devoirPourAdapteur;
     }
 
-    Alarme alarmeTest;
     public void ajouterAlarme(Context context){
-        Intent test = new Intent(getApplicationContext(), Alarme.class);
-        startActivity(test);
-        alarmeTest.ajouterAlarme(tempsAlarme);
+        Intent intententionLancerAlarme = new Intent(context, Alarme.class);
+        intententionLancerAlarme.putExtra("matiere", this.getMatiere());
+        intententionLancerAlarme.putExtra("tache", this.getTache());
+        intententionLancerAlarme.putExtra("tempsAlarme", this.getTempsAlarme());
+        Activity activite = (Activity) context;
+
+        activite.startActivityForResult(intententionLancerAlarme, ACTIVITE_AJOUTER_ALARME);
+    }
+
+    protected void onActivityResult(int activite, int resultat, Intent donnees){
+        switch (activite){
+            case ACTIVITE_AJOUTER_ALARME:
+                this.finish();
+                break;
+        }
     }
 
     public String getMatiere() {

@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 public class Alarme extends AppCompatActivity {
@@ -15,15 +14,21 @@ public class Alarme extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vue_alarme);
 
-        Log.d("HELLO", "ICI CEST ALARME");
-    }
+        Bundle parametres = this.getIntent().getExtras();
+        String matiere = parametres.getString("matiere");
+        String tache = parametres.getString("tache");
+        long tempsAlarme = parametres.getLong("tempsAlarme");
 
-    public void ajouterAlarme(long tempsAlarmeMsec){
-        Intent intent = new Intent(this, AlarmeReception.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent intententionLancerAlarme = new Intent(this, AlarmeReception.class);
+        intententionLancerAlarme.putExtra("matiere", matiere);
+        intententionLancerAlarme.putExtra("tache", tache);
+
+        PendingIntent attenteIntentionLancerAlarme = PendingIntent.getBroadcast(this, 0, intententionLancerAlarme, 0);
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3000, pendingIntent);
-        Toast.makeText(this, "Alarm set in " + 3 + " seconds",Toast.LENGTH_LONG).show();
-        Log.d("HELLO", "" + System.currentTimeMillis());
+        alarmManager.set(AlarmManager.RTC_WAKEUP, tempsAlarme, attenteIntentionLancerAlarme);
+
+        Toast.makeText(this, "Alarme dans " + ((tempsAlarme - System.currentTimeMillis()) / 1000) + " secondes",Toast.LENGTH_LONG).show();
+        this.finish();
     }
 }
