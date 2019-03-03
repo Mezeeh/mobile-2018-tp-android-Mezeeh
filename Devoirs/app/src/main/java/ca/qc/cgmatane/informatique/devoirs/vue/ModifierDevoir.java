@@ -2,12 +2,15 @@ package ca.qc.cgmatane.informatique.devoirs.vue;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
 import ca.qc.cgmatane.informatique.devoirs.R;
 import ca.qc.cgmatane.informatique.devoirs.accesseur.DevoirsDAO;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
@@ -16,18 +19,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class ModifierDevoir extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class ModifierDevoir extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     protected DevoirsDAO accesseurDevoirs;
     protected Devoir devoir;
 
     protected EditText champMatiere,
-                        champTache,
-                        champAlarme;
+            champTache,
+            champAlarme;
 
     protected Button actionModifierDevoir,
-                        actionSupprimerAlarme,
-                        actionTerminerAlarme,
-                        actionSupprimerDevoir;
+            actionSupprimerAlarme,
+            actionTerminerAlarme,
+            actionSupprimerDevoir;
 
     protected Calendar calendrier;
 
@@ -36,14 +39,14 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     protected TimePickerDialog dialogueChoixHeure;
 
     protected int anneeAlarme,
-                    moisAlarme,
-                    jourAlarme,
-                    heureAlarme,
-                    minuteAlarme;
+            moisAlarme,
+            jourAlarme,
+            heureAlarme,
+            minuteAlarme;
 
     protected boolean aAlarme,
-                        devoirTermine,
-                        tempsAlarmeDevoirEstPasse;
+            devoirTermine,
+            tempsAlarmeDevoirEstPasse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        if(aAlarme) {
+        if (aAlarme) {
             calendrier = Calendar.getInstance();
             calendrier.setTimeInMillis(devoir.getTempsAlarme());
             this.heureAlarme = calendrier.get(Calendar.HOUR_OF_DAY);
@@ -99,7 +102,7 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         actionSupprimerDevoir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Click", "Supprimer");
+                supprimerDevoir();
             }
         });
 
@@ -119,9 +122,9 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
             }
         });
 
-        if(!tempsAlarmeDevoirEstPasse && aAlarme)
+        if (!tempsAlarmeDevoirEstPasse && aAlarme)
             actionSupprimerAlarme.setVisibility(View.VISIBLE);
-        else if(tempsAlarmeDevoirEstPasse && aAlarme) {
+        else if (tempsAlarmeDevoirEstPasse && aAlarme) {
             actionSupprimerAlarme.setVisibility(View.VISIBLE);
             actionTerminerAlarme.setVisibility(View.VISIBLE);
         }
@@ -134,18 +137,18 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         actionSupprimerAlarme.setVisibility(View.GONE);
     }
 
-    private void terminerDevoir(){
+    private void terminerDevoir() {
         tempsAlarmeDevoirEstPasse = true;
         devoir.setDevoirEstTermine(true);
         devoirTermine = devoir.isDevoirEstTermine();
         actionTerminerAlarme.setVisibility(View.GONE);
     }
 
-    private void modifierDevoir(){
+    private void modifierDevoir() {
         devoir = new Devoir(champMatiere.getText().toString(), champTache.getText().toString(), this.devoir.getId_devoir());
         devoir.setaAlarme(aAlarme);
         devoir.setDevoirEstTermine(devoirTermine);
-        if(!devoir.isDevoirEstTermine() && aAlarme){
+        if (!devoir.isDevoirEstTermine() && aAlarme) {
             long tempsAlarmeMsec = 0;
             try {
                 tempsAlarmeMsec = new SimpleDateFormat("hh:mm dd/MM/yyyy").parse(this.heureAlarme + ":" + this.minuteAlarme + " " + this.jourAlarme + "/" + this.moisAlarme + "/" + this.anneeAlarme).getTime();
@@ -162,7 +165,11 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
         naviguerRetourALaBibliotheque();
     }
 
-    public void naviguerRetourALaBibliotheque(){
+    private void supprimerDevoir() {
+        Log.d("Click", "" + devoir.getId_devoir());
+    }
+
+    public void naviguerRetourALaBibliotheque() {
         this.finish();
     }
 
