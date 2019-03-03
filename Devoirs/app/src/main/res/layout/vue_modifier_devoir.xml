@@ -69,4 +69,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Enregistrer les modifications" />
+    <Button
+            android:id="@+id/action_supprimer_devoir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Supprimer le devoir"/>
 </LinearLayout>

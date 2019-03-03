@@ -26,7 +26,8 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
 
     protected Button actionModifierDevoir,
                         actionSupprimerAlarme,
-                        actionTerminerAlarme;
+                        actionTerminerAlarme,
+                        actionSupprimerDevoir;
 
     protected Calendar calendrier;
 
@@ -91,6 +92,14 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View v) {
                 modifierDevoir();
+            }
+        });
+
+        actionSupprimerDevoir = findViewById(R.id.action_supprimer_devoir);
+        actionSupprimerDevoir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Click", "Supprimer");
             }
         });
 

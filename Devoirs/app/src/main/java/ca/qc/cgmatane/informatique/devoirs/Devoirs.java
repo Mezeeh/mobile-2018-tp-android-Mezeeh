@@ -72,7 +72,7 @@ public class Devoirs extends AppCompatActivity {
                 listeDevoir,
                 R.layout.affichage_menu_devoirs,
                 new String[] {"matiere","tache", "tempsAlarme"},
-                new int[] {R.id.matire, R.id.tache, R.id.temps_alarme});
+                new int[] {R.id.matiere, R.id.tache, R.id.temps_alarme});
 
         vueListeDevoir.setAdapter(adapteur);
     }
