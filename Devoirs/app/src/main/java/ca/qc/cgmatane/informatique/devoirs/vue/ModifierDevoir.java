@@ -166,7 +166,11 @@ public class ModifierDevoir extends AppCompatActivity implements DatePickerDialo
     }
 
     private void supprimerDevoir() {
-        Log.d("Click", "" + devoir.getId_devoir());
+        devoir.setaAlarme(false);
+        devoir.setDevoirEstTermine(true);
+
+        accesseurDevoirs.supprimerDevoir(devoir.getId_devoir());
+        naviguerRetourALaBibliotheque();
     }
 
     public void naviguerRetourALaBibliotheque() {

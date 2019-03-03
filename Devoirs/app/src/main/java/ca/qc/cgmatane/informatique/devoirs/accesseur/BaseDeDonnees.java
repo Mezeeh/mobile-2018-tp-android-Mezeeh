@@ -30,7 +30,7 @@ public class BaseDeDonnees extends SQLiteOpenHelper {
 
     @Override
     public void onOpen(SQLiteDatabase db) {
-        String DELETE = "delete from devoir where 1 = 1";
+        /*String DELETE = "delete from devoir where 1 = 1";
         db.execSQL(DELETE);
 
         String INSERT_1 = "insert into devoir(id_devoir, matiere, tache, temps_alarme, est_termine) VALUES('1', 'Programmation Mobile', 'Release initial du travail pratique Android Java', null, 0)";
@@ -39,7 +39,7 @@ public class BaseDeDonnees extends SQLiteOpenHelper {
 
         db.execSQL(INSERT_1);
         db.execSQL(INSERT_2);
-        db.execSQL(INSERT_3);
+        db.execSQL(INSERT_3);*/
     }
 
     @Override
