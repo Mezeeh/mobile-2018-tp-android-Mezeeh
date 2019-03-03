@@ -1,8 +1,10 @@
 package ca.qc.cgmatane.informatique.devoirs.accesseur;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import ca.qc.cgmatane.informatique.devoirs.modele.Devoir;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,5 +105,13 @@ public class DevoirsDAO {
         }
 
         baseDeDonnees.getWritableDatabase().execSQL(AJOUTER_DEVOIR);
+    }
+
+    public void supprimerDevoir(int id){
+        String SUPPRIMER_DEVOIR = "DELETE FROM devoir WHERE id_devoir = ?;";
+
+        SQLiteStatement requete = baseDeDonnees.getWritableDatabase().compileStatement(SUPPRIMER_DEVOIR);
+        requete.bindLong(1, id);
+        requete.executeUpdateDelete();
     }
 }
